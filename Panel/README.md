@@ -22,6 +22,12 @@ There is also a simple test page ``ìndex.html`` as a part of the Panel componen
 
 ## How To Use
 
+Install the component using npm:
+
+```bash
+$ npm install magx-panel
+```
+
 First create either ```MagxPanel``` class or declare ```<magx-panel>``` element in DOM. You can then start adding the elements to the panel either declaring them on HTML markup or then creating them programmatically and adding them as child nodes to the panel. The tag names are defined in class ```MagxPanelConstants``` and the class names are very self-explanatory. Please check the example application that shows in practice how to use the panel.
 
 Note that the created panel is bound to its parent's screen area by default. If you want it to be unconstrained, either set attribute ```outofbounds="false"``` or call method ```.setOutOfBoundsCheck(false)```. If the parent element is moving around the screen, ```position``` property of the parent should not be ```static``` as the panel won't then move alongside the parent. However, the panel observes the resize events of the parent to automatically re-adjust the boundaries in case the out of bounds check is turned on and it works independently of the ```position``` property.
