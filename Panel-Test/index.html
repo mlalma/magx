@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example Panel</title>
+    
+    <style>
+      body {
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+        background-color: #999999;
+      }     
+    </style>
+  </head>
+  <body>         
+      <magx-panel x="50" y="50" id="Panel" title="Test Panel">
+        <magx-panel-checkbox title="Out of Bounds Check" id="Checkbox1" checked></magx-panel-checkbox>
+        <magx-panel-colorpicker title="Test Color Picker" id="ColorPicker1" value="#777777"></magx-panel-colorpicker>
+        <magx-panel-button title="Change Color" id="Button1"></magx-panel-button>        
+        <magx-panel-date title="Test Date" id="Date1"></magx-panel-date>
+  
+        <magx-panel-dropdown title="Test Dropdown" index="1" id="Dropdown1">
+          <option label="First">First</option>
+          <option label="Second">Second</option>
+          <option label="Third">Third</option>
+        </magx-panel-dropdown>                                               
+      </magx-panel>
+    <script type="module" src="/src/ExamplePanel.ts" defer></script>
+  </body>
+</html>

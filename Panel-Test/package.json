@@ -1,0 +1,17 @@
+{
+  "name": "magx-panel-test",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4",
+    "vite": "^3.2.3"
+  },
+  "dependencies": {
+    "magx-panel": "^1.0.0"
+  }
+}
