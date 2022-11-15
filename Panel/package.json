@@ -1,5 +1,5 @@
 {
-  "name": "@magx/Panel",
+  "name": "magx-panel",
   "version": "1.0.0",
   "description": "Lit component for creating floating panels for e.g. heads-up display (HUD) user interfaces",
   "keywords": [
