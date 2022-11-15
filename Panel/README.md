@@ -41,7 +41,7 @@ Notice that for render() all elements need to have ```div``` element of class ``
 
 Other UX-related thing to observe is to add ```MagxPanelBaseElement._baseStyle``` to the styles definition of each component to keep the style in synch.
 
-```MagxPanelBaseElement``` does initialization of ``ìd```and ```title``` in ```firstUpdated()``` so remember to call ```super.firstUpdated()``` if you overload the method. If ```id``` is not explicitly defined it will be generated for the component.
+```MagxPanelBaseElement``` does initialization of ```ìd``` and ```title``` in ```firstUpdated()``` so remember to call ```super.firstUpdated()``` if you overload the method. If ```id``` is not explicitly defined it will be generated for the component.
 
 For a very simple example check [implementation](https://github.com/mlalma/magx/blob/main/Panel/src/Panel-Image.ts) of ```MagxPanelImage```.
 
