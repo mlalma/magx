@@ -1,0 +1,43 @@
+{
+  "name": "@magx/Panel",
+  "version": "1.0.0",
+  "description": "Lit component for creating floating panels for e.g. heads-up display (HUD) user interfaces",
+  "keywords": [
+    "lit",
+    "hud",
+    "gui",
+    "panel",
+    "floating panel",
+    "ui",
+    "ui component",
+    "web component"
+  ],
+  "homepage": "https://github.com/mlalma/magx/tree/main/Panel#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mlalma/magx.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mlalma/magx/issues"
+  },
+  "license": "MIT",
+  "author": "mla_lma",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "main": "dist/Magx-Panel.js",
+  "type": "module",
+  "types": "./types/index.d.ts",
+  "dependencies": {
+    "lit": "^2.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4",
+    "vite": "^3.2.3"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build"
+  }
+}

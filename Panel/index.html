@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <!--
+  Page used during development for testing and debugging.
+  Launch npm run dev and then go on browser to http://localhost:5173/ to see the test page
+  -->
+
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Panel Development & Test Corner</title>
+
+    <link rel="stylesheet" href="/Panel.css">
+    <!-- <link rel="stylesheet" href="/public/Panel-Black-Tiny.css"> -->
+    <script type="module" src="/src/Panel.ts"></script>
+    <script type="module" src="/src/Panel-Checkbox.ts"></script>
+    <script type="module" src="/src/Panel-Button.ts"></script>
+    <script type="module" src="/src/Panel-ColorPicker.ts"></script>
+    <script type="module" src="/src/Panel-Date.ts"></script>
+    <script type="module" src="/src/Panel-DropDown.ts"></script>
+    <script type="module" src="/src/Panel-Time.ts"></script>
+    <script type="module" src="/src/Panel-FileChooser.ts"></script>
+    <script type="module" src="/src/Panel-Image.ts"></script>
+    <script type="module" src="/src/Panel-ProgressBar.ts"></script>
+    <script type="module" src="/src/Panel-TextInput.ts"></script>
+    <script type="module" src="/src/Panel-TextArea.ts"></script>
+    <script type="module" src="/src/Panel-HTML.ts"></script>
+    <script type="module" src="/src/Panel-Range.ts"></script>
+
+    <style>
+      body {
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      #area-align {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #area {
+        position: relative;
+        display: block;
+        background-color: #aaaaaa;
+        width: 1200px;
+        height: 1000px;
+        overflow: hidden;        
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="area-align">
+      <div id="area">
+        <magx-panel x="10" y="10" id="panel" title="Test panel">
+          <magx-panel-checkbox title="Checbox Test" id="checkbox1"></magx-panel-checkbox>
+          <magx-panel-button title="Test Button" id="button1"></magx-panel-button>
+          <magx-panel-colorpicker title="Test ColPicker" id="colpicker1" value="#777777"></magx-panel-colorpicker>                 
+          <magx-panel-date title="Test Date" min_date="2022-11-03" max_date="2022-11-20" id="date1"></magx-panel-date>
+          <magx-panel-dropdown title="Test DropDown" index="2" id="dropdown1">
+            <option label="First">First</option>
+            <option label="Second">Second</option>
+            <option label="Third">Third</option>
+          </magx-panel-dropdown>                         
+          <magx-panel-time title="Test Time" time="13:00:05" min_time="04:00:00" max_time="19:00:00" id="time1"></magx-panel-time>
+          <magx-panel-filechooser id="file1" title="Test File Chooser" placeholder="PDF file" filter=".pdf"></magx-panel-filechooser>               
+          <magx-panel-image id="image1" title="Test Image" src="./testimage.jpg"></magx-panel-image>          
+          <magx-panel-progressbar title="Test Progress Bar" max="100" value="20" type="numbers" id="progressbar1"></magx-panel-progressbar>
+          <magx-panel-textinput title="Test Input" type="password" min="0" max="100" value="" placeholder="Enter password" maxlength="10" id="input1"></magx-panel-textinput>
+          <magx-panel-textarea title="Test TextArea" placeholder="Text comes here" rows="3" value="Pre-set text" id="textarea1"></magx-panel-textarea>
+          <magx-panel-html title="Test HTML" id="html1">
+              <i>Random italic</i><br/><b>Random bold</b><br/>
+          </magx-panel-html>
+          <magx-panel-range title="Test Range" value="3" min="3" max="15" step="3" id="range1"></magx-panel-range>
+        </magx-panel>
+      </div> 
+    </div>
+    <script type="module" src="main.ts" defer></script>
+  </body>
+</html>
