@@ -10,6 +10,15 @@ See the index.html and main.ts files that show various different sparkline examp
 
 <img style="width: 500px" src="examples.png">
 
+For viewing the examples clone this repository, install the dependencies and run vite dev server:
+
+```bash
+$ npm install
+$ npm run dev
+```
+
+Then connect on your browser to the localhost URL provided by Vite. The example HTML markup and Typescript code are defined on files ```index.html``` and ```main.ts```.
+
 ## How To Use
 
 Install the component using npm:
@@ -17,14 +26,6 @@ Install the component using npm:
 ```bash
 $ npm install magx-sparkline
 ```
-
-View the examples:
-
-```bash
-$ npm run dev
-```
-
-Then connect on your browser to the localhost URL provided by Vite.
 
 First create either instance of ```MagxSparkline``` class or declare ```<magx-sparkline>``` element in DOM. If you declare the element in DOM, you can define multiple different attributes to customize the sparkline. Similarly you can customize the component completely programmatically.
 
