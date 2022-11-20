@@ -8,6 +8,8 @@ Magx-Sparkline uses [Lit](https://lit.dev/) as the base libray for creating the 
 
 See the index.html and main.ts files that show various different sparkline examples.
 
+<img style="width: 500px" src="examples.png">
+
 ## How To Use
 
 Install the component using npm:
