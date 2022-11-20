@@ -124,12 +124,12 @@ export class MagxSparkline extends LitElement {
         this._referenceLineYPos = parseFloat(this.getAttribute("refLineYPos") ?? "0.0");
         this._referenceLineColor = this.getAttribute("refLineCol")?.toLowerCase().trim() ?? "rgba(255.0, 0.0, 0.0, 0.0)";
         this._referenceLineWidth = parseFloat(this.getAttribute("refLineWidth") ?? "1.0");
-        this._referenceLineType = (this.getAttribute("type") ?? "none").toLowerCase().trim() as RefLineType ?? RefLineType.None;
+        this._referenceLineType = (this.getAttribute("refLineType") ?? "none").toLowerCase().trim() as RefLineType ?? RefLineType.None;
 
         this._backgroundColor = this.getAttribute("bckgCol")?.toLowerCase().trim() ?? "rgba(255.0, 255.0, 255.0, 1.0)";
 
         this._endpointColor = this.getAttribute("endpointCol")?.toLowerCase().trim() ?? "rgba(255.0, 0.0, 0.0, 0.75)";
-        this._endpointRadius = parseFloat(this.getAttribute("ednpointRadius") ?? "2.5");
+        this._endpointRadius = parseFloat(this.getAttribute("endpointRadius") ?? "2.5");
 
         this._lineWidth = parseFloat(this.getAttribute("lineWidth") ?? "1.0");
         this._lineType = (this.getAttribute("lineType") ?? "solid").toLowerCase().trim() as Linetype ?? Linetype.Solid;
@@ -288,7 +288,7 @@ export class MagxSparkline extends LitElement {
     }
     
     // Sets reference line width
-    public setReferenceLinWidth(width: number): void {
+    public setReferenceLineWidth(width: number): void {
         this._referenceLineWidth = Math.max(0.1, width);
     }
 

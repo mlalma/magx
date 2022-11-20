@@ -11,8 +11,8 @@ sl.setLineColor(Linetype.AboveOneColBelowOneCol, { above: { r: 0, b: 0, g: 255, 
 sl.setFill(Filltype.AboveOneColBelowOneCol, { above: {r:0, b:0, g:255, a:1}, below: {r:255, b:0, g:0, a: 1} });
 sl.setFill(Filltype.Gradient, { above: { r: 0, b: 0, g: 255, a: 0.5 }, below: { r: 255, b: 0, g: 0, a: 0.5 } });
 sl.setReferenceLine(RefLineType.Middle);
-sl.setReferenceLineColor({r:75, g:75, b:75, a: 1.0});
-sl.setEndpoint(10.0, { r: 0.0, g:0.0, b:255.0, a:1.0 });
+sl.setReferenceLineColor({r:75, g:75, b:75, a: 0.0});
+sl.setEndpoint(3.50, { r: 0.0, g:0.0, b:255.0, a:1.0 });
 sl.renderCanvas();
 //sl.setDataPointNum(50);
 sl.setLowerBound(true, -5);
