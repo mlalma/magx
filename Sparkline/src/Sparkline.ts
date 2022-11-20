@@ -8,7 +8,7 @@ export enum RefLineType {
     Average = "average",
     Median = "median",
     Custom = "custom",
-    TieToFirstDataPoint = "firstDataPoint"
+    TieToFirstDataPoint = "firstdatapoint"
 }
 
 // Type of sparkline, can be a line char or bar chart
@@ -83,7 +83,7 @@ export class MagxSparkline extends LitElement {
         }
 
     private _endpointColor: string = "rgba(255.0, 0.0, 0.0, 0.75)";
-    private _endpointRadius: number = 2.5;
+    private _endpointRadius: number = 4;
 
     private _backgroundColor: string = "rgba(255.0, 255.0, 255.0, 1.0)";
 
@@ -129,7 +129,7 @@ export class MagxSparkline extends LitElement {
         this._backgroundColor = this.getAttribute("bckgCol")?.toLowerCase().trim() ?? "rgba(255.0, 255.0, 255.0, 1.0)";
 
         this._endpointColor = this.getAttribute("endpointCol")?.toLowerCase().trim() ?? "rgba(255.0, 0.0, 0.0, 0.75)";
-        this._endpointRadius = parseFloat(this.getAttribute("endpointRadius") ?? "2.5");
+        this._endpointRadius = parseFloat(this.getAttribute("endpointRadius") ?? "3");
 
         this._lineWidth = parseFloat(this.getAttribute("lineWidth") ?? "1.0");
         this._lineType = (this.getAttribute("lineType") ?? "solid").toLowerCase().trim() as Linetype ?? Linetype.Solid;
@@ -251,9 +251,15 @@ export class MagxSparkline extends LitElement {
         this._dataCount = this._data.length;
         this._dataIndex = 0;
 
-        this._minVal = Math.min.apply(Math, this._data);
-        this._maxVal = Math.max.apply(Math, this._data);
-        this._sumVal = this._data.reduce((val1: number, val2: number) => val1 + val2) ?? 0;
+        if (this._data.length == 0) {
+            this._minVal = Number.MAX_VALUE;
+            this._maxVal = -Number.MAX_VALUE;
+            this._sumVal = 0;
+        } else {
+            this._minVal = Math.min.apply(Math, this._data);
+            this._maxVal = Math.max.apply(Math, this._data);
+            this._sumVal = this._data.reduce((val1: number, val2: number) => val1 + val2) ?? 0;
+        }
     }
 
     // Sets linie width for the line chart type
@@ -337,7 +343,7 @@ export class MagxSparkline extends LitElement {
         } else if (this._referenceLineType == RefLineType.Custom) {
             yPos = this._calcYPositionOnCanvas(this._referenceLineYPos);
         } else if (this._referenceLineType == RefLineType.TieToFirstDataPoint) {
-            return this._dataCount > 0 ? this._calcYPositionOnCanvas(this._data[this._firstIndex()]) : yPos;
+                return this._dataCount > 0 ? this._calcYPositionOnCanvas(this._data[this._firstIndex()]) : yPos;
         }
         
         return yPos;
@@ -361,7 +367,7 @@ export class MagxSparkline extends LitElement {
     private _prepareForRendering(): void {
         if (!this._canvas || !this._ctx) { return; }
 
-        this._renderingCanvasHeight = this._canvas.height - this._lineWidth;
+        this._renderingCanvasHeight = this._canvas.height - this._lineWidth - this._endpointRadius;
         this._renderingCanvasWidth = this._canvas.width - this._lineWidth / 2.0;
         this._renderingCanvasWidth -= this._endpointRadius;
 
@@ -578,14 +584,17 @@ export class MagxSparkline extends LitElement {
     
     // Renders the canvas on screen
     public renderCanvas(): void {
-        if (!this._canvas || !this._ctx || this._dataCount < 2 || this._data.length < 2) { return; }
-        
-        this._prepareForRendering();
-        
+        if (!this._canvas || !this._ctx) { return; }
+
         // Clear canvas
-        this._ctx.fillStyle = this._backgroundColor;
         this._ctx.beginPath();
+        this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
+        this._ctx.beginPath();
+        this._ctx.fillStyle = this._backgroundColor;
         this._ctx.fillRect(0, 0, this._canvas.width, this._canvas.height);        
+
+        if (this._dataCount < 2 || this._data.length < 2) { return; }
+        this._prepareForRendering();
 
         // Draw actual sparkline
         if (this._type == SparklineType.Line) {

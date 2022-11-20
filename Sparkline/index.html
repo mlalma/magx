@@ -11,18 +11,75 @@
         height: 100vh;
         margin: 0;
       }
+
+      .center-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .example-grid {
+        display: grid;
+        grid-template-columns: auto auto auto;    
+        gap: 20px 20px;
+        padding: 25px;
+        border: 1px solid gray;
+      }
   
-      #sparkline {
+      .sparkline {
         display: inline-block; 
-        width: 300px;
-        height: 100px;
+        width: 200px;
+        height: 66px;
       }
     </style>
   </head>
   <body>
-      <magx-sparkline id="sparkline" capAbove="true" capBelow="true" data="0,0.5,1,1.5,2,3,5,3,1,0,-0.5,-2,-1,-4">      
-      </magx-sparkline>
-    
+      <div class="center-container">
+        <div class="example-grid" id="grid">
+          <magx-sparkline class="sparkline" endpointRadius="6"
+                          data="0,0.5,1,1.5,2,3,5,2,3,4,1,3,2,3,1,0,-0.5,-2,-1,1">
+          </magx-sparkline>
+          <magx-sparkline class="sparkline" lineType="firstlastdiff" 
+                          lineAboveCol="rgba(0,225,0,1)" lineBelowCol="rgba(255,30,30,1)"
+                          data="0,0.5,1,1.5,2,3,5,3,1,0,-0.5,-2,-1,-4" refLineType="firstDataPoint" refLineCol="rgba(200,200,200,0.5)">
+          </magx-sparkline>
+          <magx-sparkline class="sparkline" lineType="firstlastdiff" lineWidth="2.0" 
+                          lineAboveCol="rgba(0,135,0,1)" lineBelowCol="rgba(255,30,30,1)"
+                          refLineType="firstDataPoint" refLineCol="rgba(200,200,200,0.5)"
+                          data="0,-0.5,-1,-1.5,-2,-3,0,3,1,0,0.5,2,1,2">
+          </magx-sparkline>
+          <magx-sparkline class="sparkline" lineType="abovebelow" lineWidth="2.0" lineAboveCol="rgba(0,135,0,1)"
+            lineBelowCol="rgba(255,30,30,1)" refLineType="firstDataPoint" refLineCol="rgba(200,200,200,0.5)"
+            data="0,-0.5,-1,-1.5,-2,-3,0,3,1,0,0.5,2,1,2">
+          </magx-sparkline>
+          <magx-sparkline class="sparkline" fillCol="rgba(128,128,128,0.15)" fillType="solid" lineWidth="2.0"  
+                          data="0,0.5,1,1.5,2,3,5,3,1,0,-0.5,-2,-1,-4" refLineType="firstDataPoint" refLineCol="rgba(0,0,0,0.5)">
+          </magx-sparkline>
+          <magx-sparkline class="sparkline" fillCol="rgba(128,128,128,0.5)" fillType="abovebelow" lineWidth="2.0"
+          fillAboveCol="rgba(0,135,0,.25)" fillBelowCol="rgba(255,30,30,.25)"
+            data="0,0.5,1,1.5,2,3,5,3,1,0,-0.5,-2,-1,-4" refLineType="firstDataPoint" refLineCol="rgba(0,0,0,0.25)">
+          </magx-sparkline>
+          <magx-sparkline class="sparkline" fillCol="rgba(128,128,128,0.5)" fillType="gradient" lineWidth="2.0"
+            fillAboveCol="rgba(0,135,0,.33)" fillBelowCol="rgba(255,30,30,.33)"
+            data="0,0.5,1,1.5,2,3,5,3,1,0,-0.5,-2,-1,-4" refLineType="custom" refLineYPos="3.5" refLineCol="rgba(0,0,0,0.25)">
+          </magx-sparkline>
+          <magx-sparkline class="sparkline" capAbove="true" capBelow="true" data="0,0.5,1,1.5,2,3,5,3,1,0,-0.5,-2,-1,-4" type="bar" 
+          refLineType="middle" lineWidth="2.0" fillCol="rgba(128,128,128,0.25)" fillType="solid" refLineCol="rgba(0,0,0,0.25)">
+          </magx-sparkline>
+          <magx-sparkline class="sparkline" capAbove="true" capBelow="true" data="0,0.5,1,1.5,2,3,5,3,1,0,-0.5,-2,-1,-4"
+            type="bar" refLineType="firstDataPoint" fillType="abovebelow" lineWidth="2.0"
+            fillAboveCol="rgba(0,135,0,.25)" fillBelowCol="rgba(255,30,30,.25)" refLineCol="rgba(0,0,0,0.25)">
+          </magx-sparkline>
+          <magx-sparkline class="sparkline" fillCol="rgba(128,128,128,0.5)" fillType="gradient" lineWidth="2.0"
+            fillAboveCol="rgba(0,135,0,.33)" fillBelowCol="rgba(255,30,30,.33)" data="0,0.5,1,1.5,2,3,5,3,1,0,-0.5,-2,-1,-4"
+            refLineType="custom" refLineYPos="3.5" refLineCol="rgba(0,0,0,0.25)" type="bar">
+          </magx-sparkline>
+          <!-- The remaining two sparklines are created programmatically on main.ts -->
+        </div>
+        
+      </div>      
       <script type="module" src="./main.ts" defer></script>
   </body>
 </html>
