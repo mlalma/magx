@@ -15,6 +15,7 @@ export class MagxPanelConstants {
     public static readonly PANEL_TEXTAREA = "magx-panel-textarea";
     public static readonly PANEL_TEXTINPUT = "magx-panel-textinput";
     public static readonly PANEL_TIME = "magx-panel-time";
+    public static readonly PANEL_SPARKLINE = "magx-panel-sparkline";
 
     public static readonly PANEL_ELEMENT_VALUE_CHANGED = "magx-panelValueChanged";
     public static readonly PANEL_ELEMENT_FOCUS_GAINED = "magx-panelElementFocusGained";

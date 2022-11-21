@@ -14,6 +14,7 @@ import { MagxPanelRange } from "./Panel-Range";
 import { MagxPanelTextArea } from "./Panel-TextArea";
 import { MagxPanelTextInput } from "./Panel-TextInput";
 import { MagxPanelTime } from "./Panel-Time";
+import { MagxPanelSparkline } from "./Panel-Sparkline";
 import { MagxPanelValueChangeEvent } from "./Panel-BaseElement";
 import { MagxSelectValueCallback } from "./Panel-DropDown";
 
@@ -33,5 +34,6 @@ export { MagxPanelRange };
 export { MagxPanelTextArea };
 export { MagxPanelTextInput };
 export { MagxPanelTime };
+export { MagxPanelSparkline };
 export type { MagxPanelValueChangeEvent };
 export type { MagxSelectValueCallback };

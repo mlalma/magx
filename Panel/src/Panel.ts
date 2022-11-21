@@ -11,15 +11,15 @@ export class MagxPanel extends LitElement {
     // to tune this value to ensure that the panels are on top    
     static _topZ: number = 1;
 
-    @property({type: String}) public id = "";
-    @property({type: String}) public title: string = "";
+    @property({ type: String }) public id = "";
+    @property({ type: String }) public title: string = "";
 
     private _startX: number = 0;
     private _startY: number = 0;
     private _maxX: number = 0;
     private _maxY: number = 0;
     private _outOfBoundsCheck: boolean = true;
-        
+
     private _draggable: boolean = true;
     private _collapsed: boolean = false;
     private _collapsible: boolean = true;
@@ -30,21 +30,21 @@ export class MagxPanel extends LitElement {
     private _overlay: HTMLDivElement | null = null;
     private _titleBar: HTMLDivElement | null = null;
     private _contentArea: HTMLDivElement | null = null;
-    
+
     // Constructor
     constructor() {
         super();
 
         try { this._startX = parseInt(this.getAttribute("x") ?? "0"); } catch { this._startX = 0; }
         try { this._startY = parseInt(this.getAttribute("y") ?? "0"); } catch { this._startY = 0; }
-        this.title = this.getAttribute("title") ?? "";        
+        this.title = this.getAttribute("title") ?? "";
         this.id = this.getAttribute("id")?.trim() ?? "panel_" + Math.round(Math.random() * (1 << 24)).toString(16);
         if (this.getAttribute("outofbounds")) {
             this._outOfBoundsCheck = this.getAttribute("outofbounds") === "true";
-        }        
-        this._bindHandlers();        
+        }
+        this._bindHandlers();
     }
-    
+
     // Sets if the panel can be dragged around or not
     public setDraggable(draggable: boolean): MagxPanel {
         this.draggable = draggable;
@@ -69,9 +69,10 @@ export class MagxPanel extends LitElement {
     public setPosition(x: number, y: number): void {
         if (!this._panel) { return; }
 
-        let minX = -Number.MAX_VALUE, minY = -Number.MAX_VALUE;        
+        let minX = -Number.MAX_VALUE, minY = -Number.MAX_VALUE;
         let maxX = Number.MAX_VALUE, maxY = Number.MAX_VALUE;
         if (this._outOfBoundsCheck) {
+            console.log("oobSHCEK");
             minX = 0, minY = 0;
             maxX = this._maxX, maxY = this._maxY;
         }
@@ -90,14 +91,14 @@ export class MagxPanel extends LitElement {
 
     // Collapses / expands panel
     public toggleCollapsed(): void {
-      if (this._collapsed) {
-        this._expand();
-      }
-      else {
-        this._collapse();
-      }
+        if (this._collapsed) {
+            this._expand();
+        }
+        else {
+            this._collapse();
+        }
     }
-    
+
     // Sets panel visibility
     public toggleVisibility(): void {
         if (this._hidden) {
@@ -111,7 +112,7 @@ export class MagxPanel extends LitElement {
     // De-serializes all the elements values to a single json
     public getValuesAsJSON(asString: boolean): string | { [title: string]: any } {
         let json: { [title: string]: any } | string = {};
-        
+
         const slotNode = this.shadowRoot?.getElementById("panel_elements") as HTMLSlotElement;
         const panelElements = slotNode.assignedElements();
 
@@ -120,17 +121,17 @@ export class MagxPanel extends LitElement {
                 const val = p.getValue();
                 if (val !== null) {
                     json[p.id] = val;
-                }                
+                }
             }
         }
 
         if (asString) {
             json = JSON.stringify(json);
         }
-        
+
         return json;
     }
-  
+
     // Sets element values from json
     public setValuesFromJSON(json: string | { [title: string]: any }): void {
         if (typeof json === "string") {
@@ -149,7 +150,7 @@ export class MagxPanel extends LitElement {
 
         const jsonDict = json as { [title: string]: any };
         for (var title in jsonDict) {
-            objects.get(title)?.setValue(jsonDict[title]);            
+            objects.get(title)?.setValue(jsonDict[title]);
         }
     }
 
@@ -165,7 +166,7 @@ export class MagxPanel extends LitElement {
     private _createElement(type: string, id: string | null = null, className: string | null = null, parent: HTMLElement | null = null): HTMLElement | null {
         const element = document.createElement(type);
         if (!element) return null;
-        
+
         if (id) { element.id = id; }
         if (className) { element.className = className; }
 
@@ -209,12 +210,12 @@ export class MagxPanel extends LitElement {
         this._hidden = false;
         return this;
     }
-    
+
     // Double click handler on title bar
     private _doubleClickTitle() {
         if (this._collapsible) {
-        this.toggleCollapsed();
-        } 
+            this.toggleCollapsed();
+        }
     }
 
     // Starts dragging
@@ -231,13 +232,13 @@ export class MagxPanel extends LitElement {
             this._overlay = this._createElement("div", "overlay", "overlay", this._panel) as HTMLDivElement;
             document.body.style.cursor = "none";
         }
-        event.preventDefault();        
-    }        
+        event.preventDefault();
+    }
 
     // Called during drag events (mouse move) to move the panel around
     private _drag(event: any): void {
         if (!this._panel) { return; }
- 
+
         let x = parseInt(this._panel.style.left),
             y = parseInt(this._panel.style.top),
             mouseX = event.clientX,
@@ -278,12 +279,12 @@ export class MagxPanel extends LitElement {
     }
 
     // Prevents clicks progagating under the panel
-    private _panelClicked() : void {}
+    private _panelClicked(): void { }
 
     // Called when panel is added to DOM tree
     // Starts tracking the size changes of parent to change the allowed movement area if out-of-bounds check is set
     public connectedCallback(): void {
-        super.connectedCallback()    
+        super.connectedCallback()
 
         if (!this.parentElement) { return; }
         this._maxX = this.parentElement.clientWidth;
@@ -295,15 +296,15 @@ export class MagxPanel extends LitElement {
                 this._maxX = this.parentElement.clientWidth;
                 this._maxY = this.parentElement.clientHeight;
             }
-          });                  
+        });
         this._resizeObserver.observe(this.parentElement);
-        this.setPosition(0, 0);    
+        this.setPosition(0, 0);
     }
 
     // Called when panel is removed from DOM tree
     public disconnectedCallback(): void {
         super.disconnectedCallback();
-        
+
         this._resizeObserver?.disconnect();
         this._resizeObserver = null;
     }
@@ -313,7 +314,7 @@ export class MagxPanel extends LitElement {
         this._panel = this.shadowRoot?.getElementById("panel") as HTMLDivElement;
         ++MagxPanel._topZ;
         this._panel.style.zIndex = MagxPanel._topZ.toString();
-        
+
         this._titleBar = this.shadowRoot?.getElementById("title_bar") as HTMLDivElement;
         this._contentArea = this.shadowRoot?.getElementById("content_area") as HTMLDivElement;
         this.setPosition(this._startX, this._startY);
