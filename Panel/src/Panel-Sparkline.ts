@@ -44,19 +44,22 @@ export class MagxPanelSparkline extends MagxPanelBaseElement {
         sparkline.style.height = (sparkWidth * 0.33).toString() + "px";
         let bckgCol = window.getComputedStyle(container).getPropertyValue("--magx-panel-container-bg").trim();
         if (bckgCol.startsWith("#")) {
-            console.log("SSAFADSFRA");
             bckgCol = bckgCol.substring(1);
             const r = parseInt(bckgCol.substring(0, 2), 16);
             const g = parseInt(bckgCol.substring(2, 4), 16);
             const b = parseInt(bckgCol.substring(4, 6), 16);
             sparkline.setBackgroundColor({ r: r, g: g, b: b, a: 1.0 });
             sparkline.renderCanvas();
-            console.log(r, g, b);
         } else if (bckgCol.startsWith("rgb")) {
-
+            let rgbVals = bckgCol.match(/[.?\d]+/g) ?? [];
+            if (Array.isArray(rgbVals) && rgbVals.length >= 3) {
+                const r = parseFloat(rgbVals[0]);
+                const g = parseFloat(rgbVals[1]);
+                const b = parseFloat(rgbVals[2]);
+                sparkline.setBackgroundColor({ r: r, g: g, b: b, a: 1.0 });
+                sparkline.renderCanvas();
+            }
         }
-        console.log("Afcasd");
-        console.log("BCKGCOL", bckgCol);
     }
 
     // Stylesheet
