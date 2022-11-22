@@ -4,6 +4,11 @@ import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import { MagxPanelBaseElement } from './Panel-BaseElement';
 import { MagxPanelConstants } from './Panel-Constants';
 
+export enum MagxPanelProgressBarType {
+    numbers = "numbers",
+    percent = "percent"
+}
+
 // Progress bar element
 // Note that you can't set minimum value, only maximum value. The minimum is always 0
 @customElement(MagxPanelConstants.PANEL_PROGRESSBAR)
@@ -14,7 +19,7 @@ export class MagxPanelProgressBar extends MagxPanelBaseElement {
 
     private _maxValue: number = 100;
     private _curValue: number = 0;
-    private _type: string = "numbers";
+    private _type: MagxPanelProgressBarType = MagxPanelProgressBarType.numbers;
 
     set currentValue(val: number) {
         const boundedVal = Math.max(0, Math.min(val, this._maxValue));
@@ -36,13 +41,13 @@ export class MagxPanelProgressBar extends MagxPanelBaseElement {
     get maxValue(): number {
         return this._maxValue;
     }
-    
+
     // Constructor
     constructor() {
         super();
 
         try {
-            this._maxValue = parseInt(this.getAttribute("max") ?? "100");            
+            this._maxValue = parseInt(this.getAttribute("max") ?? "100");
         } catch {
             this._maxValue = 100;
         }
@@ -55,20 +60,26 @@ export class MagxPanelProgressBar extends MagxPanelBaseElement {
 
         this._maxValue = Math.max(0, this._maxValue);
         this._curValue = Math.max(0, Math.min(this._curValue, this._maxValue));
-        this._type = this.getAttribute("type")?.toLowerCase().trim() ?? "numbers";
+        this._type = (this.getAttribute("type") ?? "numbers").toLowerCase().trim() as MagxPanelProgressBarType ?? MagxPanelProgressBarType.numbers;
     }
 
     // Setting type shows information about the state of the progress after element's title
     private _setRestOfTitle() {
-        if (this._type === "numbers") {
+        if (this._type === MagxPanelProgressBarType.numbers) {
             this.restOfTitle = "<b>:</b> " + this._curValue + " / " + this._maxValue;
-        } else if (this._type === "percent") {
+        } else if (this._type === MagxPanelProgressBarType.percent) {
             this.restOfTitle = "<b>:</b> " + (this._maxValue == 0 ? 0 : Math.round((this._curValue / this._maxValue) * 100)) + "%";
         } else {
             this.restOfTitle = "";
         }
     }
-    
+
+    // Sets type for the title
+    public setType(newType: MagxPanelProgressBarType): void {
+        this._type = newType;
+        this._setRestOfTitle();
+    }
+
     // Renders the element
     render() {
         return html`
@@ -104,7 +115,7 @@ export class MagxPanelProgressBar extends MagxPanelBaseElement {
             background-color: var(--magx-panel-progress-value);
         }
     `];
-    
+
     // Returns the current value
     getValue(): any {
         return this._curValue;
@@ -115,7 +126,7 @@ export class MagxPanelProgressBar extends MagxPanelBaseElement {
     setValue(val: any): void {
         if (typeof val === "number") {
             this.currentValue = val;
-        }        
+        }
     }
 }
 
