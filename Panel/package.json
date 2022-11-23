@@ -1,6 +1,6 @@
 {
   "name": "magx-panel",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Lit component for creating floating panels for e.g. heads-up display (HUD) user interfaces",
   "keywords": [
     "lit",

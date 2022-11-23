@@ -20,6 +20,7 @@ export class MagxPanel extends LitElement {
     private _maxY: number = 0;
     private _outOfBoundsCheck: boolean = true;
 
+    private _showCloseButton: boolean = true;
     private _draggable: boolean = true;
     private _collapsed: boolean = false;
     private _collapsible: boolean = true;
@@ -30,6 +31,7 @@ export class MagxPanel extends LitElement {
     private _overlay: HTMLDivElement | null = null;
     private _titleBar: HTMLDivElement | null = null;
     private _contentArea: HTMLDivElement | null = null;
+    private _closeButton: HTMLImageElement | null = null;
 
     // Constructor
     constructor() {
@@ -39,9 +41,8 @@ export class MagxPanel extends LitElement {
         try { this._startY = parseInt(this.getAttribute("y") ?? "0"); } catch { this._startY = 0; }
         this.title = this.getAttribute("title") ?? "";
         this.id = this.getAttribute("id")?.trim() ?? "panel_" + Math.round(Math.random() * (1 << 24)).toString(16);
-        if (this.getAttribute("outofbounds")) {
-            this._outOfBoundsCheck = this.getAttribute("outofbounds") === "true";
-        }
+        if (this.getAttribute("outofbounds")) { this._outOfBoundsCheck = this.getAttribute("outofbounds") === "true"; }
+        if (this.getAttribute("closebutton")) { this._showCloseButton = this.getAttribute("closebutton") === "true"; }
         this._bindHandlers();
     }
 
@@ -72,7 +73,6 @@ export class MagxPanel extends LitElement {
         let minX = -Number.MAX_VALUE, minY = -Number.MAX_VALUE;
         let maxX = Number.MAX_VALUE, maxY = Number.MAX_VALUE;
         if (this._outOfBoundsCheck) {
-            console.log("oobSHCEK");
             minX = 0, minY = 0;
             maxX = this._maxX, maxY = this._maxY;
         }
@@ -266,11 +266,21 @@ export class MagxPanel extends LitElement {
         document.body.style.cursor = "auto";
     }
 
+    private _removePanel(): void {
+        this.remove();
+    }
+
     // Renders the element
     protected render() {
         return html`
         <div id="panel" class="main_panel" @click=${this._panelClicked}>
-            <div class="title_bar" id="title_bar" draggable="true" @dblclick=${this._doubleClickTitle} @dragstart=${this._startDrag}>${this.title}</div>
+            <div class="title_bar_container">
+                <div class="title_bar" id="title_bar" draggable="true" @dblclick=${this._doubleClickTitle} @dragstart=${this._startDrag}>${this.title}</div>
+                <div class="title_bar_filler" draggable="true" @dblclick=${this._doubleClickTitle} @dragstart=${this._startDrag}></div>
+                <div class="title_bar_close_button_container" draggable="true" @dblclick=${this._doubleClickTitle} @dragstart=${this._startDrag}>
+                    <img class="title_bar_close_button_image" id="close_button" @click=${this._removePanel} src=""/>
+                </div>                                
+            </div>
             <div class="content_area" id="content_area">
                 <slot id="panel_elements"></slot>
             </div>
@@ -309,6 +319,22 @@ export class MagxPanel extends LitElement {
         this._resizeObserver = null;
     }
 
+    public setCloseButtonState(show: boolean): void {
+        if (!this._closeButton || !this._titleBar) { return; }
+        this._showCloseButton = show;
+        if (this._showCloseButton) {
+            const titleBarTextHeightStr = window.getComputedStyle(this._titleBar).getPropertyValue("height");
+            const titleBarTextHeight = parseFloat(titleBarTextHeightStr.substring(0, titleBarTextHeightStr.length - 2));
+            const closeButtonProps = window.getComputedStyle(this._closeButton);
+            const imgData = closeButtonProps.getPropertyValue("--magx-panel-closebutton");
+            this._closeButton.src = imgData.substring(2, imgData.length - 1);
+            this._closeButton.style.display = "block";
+            this._closeButton.style.height = (titleBarTextHeight * 0.66).toString() + "px";
+        } else {
+            this._closeButton.style.display = "none";
+        }
+    }
+
     // Called before the component is rendered for the first time
     protected firstUpdated(_changedProperties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
         this._panel = this.shadowRoot?.getElementById("panel") as HTMLDivElement;
@@ -317,11 +343,46 @@ export class MagxPanel extends LitElement {
 
         this._titleBar = this.shadowRoot?.getElementById("title_bar") as HTMLDivElement;
         this._contentArea = this.shadowRoot?.getElementById("content_area") as HTMLDivElement;
+        this._closeButton = this.shadowRoot?.getElementById("close_button") as HTMLImageElement;
         this.setPosition(this._startX, this._startY);
+        this.setCloseButtonState(this._showCloseButton);
     }
 
     // Stylesheet
-    static styles = css`        
+    static styles = css`
+        .title_bar_container {
+            display: grid;
+            grid-template-columns: max-content auto max-content;
+            width: 100%;
+        }
+
+        .title_bar_filler {
+            background-color: var(--magx-panel-title-bg);
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: pointer;
+            border: none;
+        }
+
+        .title_bar_close_button_container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--magx-panel-title-bg);
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: pointer;
+            border: none;
+        }
+
+        .title_bar_close_button_image {            
+            height: 0px;
+            margin-right: 5px;
+            cursor: default;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
         .main_panel {
             background-color: var(--magx-panel-main-bg);
             text-align:left;
