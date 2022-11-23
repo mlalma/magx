@@ -8,12 +8,14 @@ Panel uses [Lit](https://lit.dev/) as the base libray for creating the web compo
 
 ### Available Components
 
-By default, Panel contains 13 elements that can be added to the panel. New elements can be created by extending a new class from the base element and following instructions on specific [sub-chapter](#adding-new-components). The currently available components are:
+By default, Panel contains 14 elements that can be added to the panel. New elements can be created by extending a new class from the base element and following instructions on specific [sub-chapter](#adding-new-components). The currently available components are:
 
 | Component | Example Panel |
 | ---- | ----|
 | Checkbox<br/><br/>Button<br/><br/>Color picker<br/><br/><br/>Date<br/><br/>Drop down<br/><br/>Time<br/><br/><br/>File Chooser<br/><br/><br/><br/>Image<br/><br/><br/><br/>Progress Bar<br/><br/>Input<br/><br/><br/>Text area<br/><br/><br/>Arbitrary HTML<br/><br/><br/>Range | <img src="panel1.png"> |
   
+Not included on the image: Sparkline.
+
 ## Examples
 
 Please check a separate [example application](https://github.com/mlalma/magx/tree/main/Panel-Test), which shows how to create panels programmatically and declaratively.
